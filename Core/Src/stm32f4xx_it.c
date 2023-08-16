@@ -24,6 +24,8 @@
 #include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
+extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,7 +45,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+uint32_t timeNow = 0;
+uint32_t timeOld = 0;
+uint8_t buf[100];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -190,7 +194,8 @@ void SysTick_Handler(void)
 void CAN1_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
-
+  canRxInt(&hcan1,0);
+  return;
   /* USER CODE END CAN1_RX0_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan1);
   /* USER CODE BEGIN CAN1_RX0_IRQn 1 */
@@ -204,7 +209,8 @@ void CAN1_RX0_IRQHandler(void)
 void CAN1_RX1_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX1_IRQn 0 */
-
+  canRxInt(&hcan1,1);
+  return;
   /* USER CODE END CAN1_RX1_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan1);
   /* USER CODE BEGIN CAN1_RX1_IRQn 1 */
@@ -218,7 +224,15 @@ void CAN1_RX1_IRQHandler(void)
 void TIM8_UP_TIM13_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 0 */
-
+  LL_TIM_ClearFlag_UPDATE(TIM8);
+  timeNow = HAL_GetTick();
+  int32_t deltaT = timeNow - timeOld - 1000;
+  timeOld = timeNow;
+  if (deltaT <  -1 || deltaT > 1){
+    //uint8_t nBytes = snprintf((char*)buf,sizeof(buf),"%ld\n\r",deltaT);
+    LL_TIM_SetAutoReload(TIM8,(LL_TIM_GetAutoReload(TIM8) - deltaT));
+    //CDC_Transmit_FS(buf, nBytes);
+  }
   /* USER CODE END TIM8_UP_TIM13_IRQn 0 */
 
   /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */
@@ -232,7 +246,8 @@ void TIM8_UP_TIM13_IRQHandler(void)
 void CAN2_RX0_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN2_RX0_IRQn 0 */
-
+  canRxInt(&hcan2,0);
+  return;
   /* USER CODE END CAN2_RX0_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan2);
   /* USER CODE BEGIN CAN2_RX0_IRQn 1 */
@@ -246,7 +261,7 @@ void CAN2_RX0_IRQHandler(void)
 void CAN2_RX1_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN2_RX1_IRQn 0 */
-
+  canRxInt(&hcan2,0);
   /* USER CODE END CAN2_RX1_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan2);
   /* USER CODE BEGIN CAN2_RX1_IRQn 1 */
