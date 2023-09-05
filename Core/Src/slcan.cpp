@@ -4,7 +4,12 @@
 
 extern USBD_HandleTypeDef hUsbDeviceFS;
 extern CAN_HandleTypeDef hcan;
-
+extern uint32_t greenLed1;
+extern uint32_t greenLed2;
+extern uint32_t redLed;
+extern uint32_t whiteLed;
+extern uint32_t blueLed;
+extern uint32_t yellowLed;
 ////////Helper Methods//////////
 
 static bool hex2nibble_error;
@@ -613,7 +618,7 @@ int16_t SLCAN::CANIface::canFrameSendByCAN(const CANFrame& frame, uint64_t tx_de
     txi.abort_on_error = (flags & AbortOnError) != 0;
     // setup frame initial state
     txi.pushed         = false;
-    
+    whiteLed = 2;
 
     return 1;
 }
@@ -625,7 +630,7 @@ int8_t SLCAN::CANIface::usbFree(){
 }
 int8_t SLCAN::CANIface::sendSerialByUSB(uint8_t  *resp_bytes, uint16_t resp_len){
     if (hUsbDeviceFS.pClassData == nullptr) return -1;
-    
+    redLed = 2;
     USBD_CDC_SetTxBuffer(&hUsbDeviceFS, resp_bytes, resp_len);
     USBD_CDC_TransmitPacket(&hUsbDeviceFS);
     return 0;

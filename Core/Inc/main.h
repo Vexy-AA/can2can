@@ -29,7 +29,6 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 
-#include "stm32f4xx_ll_i2c.h"
 #include "stm32f4xx_ll_rcc.h"
 #include "stm32f4xx_ll_bus.h"
 #include "stm32f4xx_ll_system.h"
@@ -39,9 +38,7 @@ extern "C" {
 #include "stm32f4xx_ll_pwr.h"
 #include "stm32f4xx_ll_dma.h"
 #include "stm32f4xx_ll_rtc.h"
-#include "stm32f4xx_ll_spi.h"
 #include "stm32f4xx_ll_tim.h"
-#include "stm32f4xx_ll_usart.h"
 #include "stm32f4xx_ll_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -72,6 +69,18 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define LED_GREEN1_Pin LL_GPIO_PIN_1
+#define LED_GREEN1_GPIO_Port GPIOC
+#define LED_RED_Pin LL_GPIO_PIN_3
+#define LED_RED_GPIO_Port GPIOC
+#define LED_BLUE_Pin LL_GPIO_PIN_1
+#define LED_BLUE_GPIO_Port GPIOA
+#define LED_YELLOW_Pin LL_GPIO_PIN_3
+#define LED_YELLOW_GPIO_Port GPIOA
+#define LED_WHITE_Pin LL_GPIO_PIN_5
+#define LED_WHITE_GPIO_Port GPIOC
+#define LED_GREEN2_Pin LL_GPIO_PIN_1
+#define LED_GREEN2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

@@ -26,6 +26,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 extern uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+extern void canRxInt(CAN_HandleTypeDef *_hcan, uint8_t fifo);
+extern int8_t usbReceive(uint8_t* Buf, uint32_t *Len);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
