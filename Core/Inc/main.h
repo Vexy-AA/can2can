@@ -81,7 +81,8 @@ void Error_Handler(void);
 #define LED_WHITE_GPIO_Port GPIOC
 #define LED_GREEN2_Pin LL_GPIO_PIN_1
 #define LED_GREEN2_GPIO_Port GPIOB
-
+#define stackTest 15000
+#define RTOS_ON
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

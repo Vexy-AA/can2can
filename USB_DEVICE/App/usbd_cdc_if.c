@@ -74,7 +74,7 @@
   */
 
 /* USER CODE BEGIN PRIVATE_MACRO */
-
+extern int8_t usbReceive(uint8_t* Buf, uint32_t *Len);
 /* USER CODE END PRIVATE_MACRO */
 
 /**

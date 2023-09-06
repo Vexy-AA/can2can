@@ -124,7 +124,6 @@ struct CANFrame {
     {
         return canfd;
     }
-
     static uint8_t dlcToDataLength(uint8_t dlc);
 
     static uint8_t dataLengthToDlc(uint8_t data_length);
@@ -143,7 +142,9 @@ struct CANFrame {
 class CANIface
 {
 public:
-    CANIface():
+    CANIface(void (*txLedCan)(),
+            void (*txLedSerial)()):
+        txCanLed(txLedCan),txSerialLed(txLedSerial),
         rx_queue_(HAL_CAN_RX_QUEUE_SIZE),
         tx_queue_(HAL_CAN_RX_QUEUE_SIZE),
         rxSerial(100)
@@ -157,6 +158,23 @@ public:
 
        // AP_Param::setup_object_defaults(this, var_info);
     }
+    CANIface():
+        rx_queue_(HAL_CAN_RX_QUEUE_SIZE),
+        tx_queue_(HAL_CAN_RX_QUEUE_SIZE),
+        rxSerial(100)
+    {
+        rx_queue_.clear();
+        tx_queue_.clear();
+
+        pending_tx_[0] = CanTxItem();
+        pending_tx_[1] = CanTxItem();
+        pending_tx_[2] = CanTxItem();
+        txCanLed = nullptr;
+        txSerialLed = nullptr;
+       // AP_Param::setup_object_defaults(this, var_info);
+    }
+    void (*txCanLed)(void) = nullptr;
+    void (*txSerialLed)(void) = nullptr;
     int8_t sendSerialByUSB(uint8_t  *pbuff, uint16_t length);
     // Overriden methods
     //bool set_event_handle(EventHandle* evt_handle) ;

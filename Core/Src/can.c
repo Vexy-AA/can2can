@@ -67,11 +67,11 @@ void MX_CAN1_Init(void)
   canFilter.FilterActivation = CAN_FILTER_ENABLE;
   canFilter.SlaveStartFilterBank = 0;
 
-  const CAN_FilterTypeDef canFilterFifo0 = canFilter;
+  CAN_FilterTypeDef canFilterFifo0 = canFilter;
   HAL_CAN_ConfigFilter(&hcan1, &canFilterFifo0);
   canFilter.FilterFIFOAssignment = CAN_FILTER_FIFO1;
   canFilter.FilterBank = 1;
-  const CAN_FilterTypeDef canFilterFifo1 = canFilter;
+  CAN_FilterTypeDef canFilterFifo1 = canFilter;
   HAL_CAN_ConfigFilter(&hcan1, &canFilterFifo1);
   HAL_CAN_ActivateNotification(&hcan1,CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO1_MSG_PENDING);
   /* USER CODE END CAN1_Init 2 */
@@ -117,11 +117,11 @@ void MX_CAN2_Init(void)
   canFilter.FilterActivation = CAN_FILTER_ENABLE;
   canFilter.SlaveStartFilterBank = 0;
 
-  const CAN_FilterTypeDef canFilterFifo0 = canFilter;
+  CAN_FilterTypeDef canFilterFifo0 = canFilter;
   HAL_CAN_ConfigFilter(&hcan2, &canFilterFifo0);
   canFilter.FilterFIFOAssignment = CAN_FILTER_FIFO1;
   canFilter.FilterBank = 1;
-  const CAN_FilterTypeDef canFilterFifo1 = canFilter;
+  CAN_FilterTypeDef canFilterFifo1 = canFilter;
   HAL_CAN_ConfigFilter(&hcan2, &canFilterFifo1);
   HAL_CAN_ActivateNotification(&hcan2,CAN_IT_RX_FIFO0_MSG_PENDING | CAN_IT_RX_FIFO1_MSG_PENDING);
   /* USER CODE END CAN2_Init 2 */

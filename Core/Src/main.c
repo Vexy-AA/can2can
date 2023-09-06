@@ -48,7 +48,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+osThreadId defaultTaskHandle1;
+ uint32_t defaultTaskBuffer1[stackTest];
+osStaticThreadDef_t defaultTaskControlBlock1;
 
+void defaultTask(void const * argument);
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,11 +101,32 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+#ifdef RTOS_ON
+  osThreadStaticDef(
+  defaultTask123, 
+  defaultTask, 
+  osPriorityNormal, 
+  0, 
+  stackTest, 
+  defaultTaskBuffer1, 
+  &defaultTaskControlBlock1);
+
+
+  defaultTaskHandle1 = osThreadCreate(osThread(defaultTask123), NULL);
+
+  osKernelStart();
+#else
   MX_USB_DEVICE_Init();
-  altMain();
+  altMainRaw();
+#endif
+    while(1){
+
+    };
+
+  /* 
   while (1){
     
-  }
+  } */
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
@@ -179,7 +204,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void defaultTask(void const * argument)
+{
+  MX_USB_DEVICE_Init();
+  altMain();
+  for(;;)
+  {
+    osDelay(1);
+  }
+}
 /* USER CODE END 4 */
 
 /**
